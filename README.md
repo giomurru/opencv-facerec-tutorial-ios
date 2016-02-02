@@ -9,28 +9,28 @@ http://gmurru.altervista.org/public/libraries/iOS/opencv/opencv-3.1-with-contrib
 
 Alternatively, you can build it following these instructions:
 
-1. Clone `OpenCV 3.1.0`: 
+* Clone `OpenCV 3.1.0`: 
 ```
 git clone --branch 3.1.0 https://github.com/Itseez/opencv.git
 ```
-2. Clone OpenCV Contrib:
+* Clone `OpenCV Contrib`:
 ```
 git clone --branch 3.1.0 https://github.com/Itseez/opencv_contrib.git
 ```
-3. Create a copy of `OpenCV 3.1.0` folder and name it `opencv-3.1.0-with-contrib`
+* Create a copy of `OpenCV 3.1.0` folder and name it `opencv-3.1.0-with-contrib`
 ```
 cp -r opencv opencv-3.1.0-with-contrib
 ```
-4. Copy the content of the `modules` folder of `OpenCV Contrib` inside the `modules` folder of `opencv-3.1.0-with-contrib`
+* Copy the content of the `modules` folder of `OpenCV Contrib` inside the `modules` folder of `opencv-3.1.0-with-contrib`
 ```
 cp -r opencv_contrib/modules/* opencv-3.1.0-with-contrib/modules/
 ```
-6. Create a directory to save the framework:
+* Create a directory to save the framework:
 ```
 mkdir opencv-ios-contrib
 ```
-7. Build the framework and save it inside `opencv-ios-contrib` folder:
+* Build the framework and save it inside `opencv-ios-contrib` folder:
 ```
 python opencv-3.1.0-with-contrib/platforms/ios/build_framework.py opencv-ios-contrib
 ```
-8. Wait the build process to finish. Once you generated the framework using the commands above, please copy the generated opencv2.framework in the root folder of this project.
+* Wait the build process to finish. Once you generated the framework using the commands above, please copy the generated opencv2.framework in the root folder of this project.
