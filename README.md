@@ -9,7 +9,7 @@ http://gmurru.altervista.org/public/libraries/iOS/opencv/opencv-3.1-with-contrib
 
 Alternatively, you can build it following these instructions:
 
-1. Clone OpenCV 3.1.0: 
+1. Clone `OpenCV 3.1.0`: 
 ```
 git clone --branch 3.1.0 https://github.com/Itseez/opencv.git
 ```
@@ -17,11 +17,11 @@ git clone --branch 3.1.0 https://github.com/Itseez/opencv.git
 ```
 git clone --branch 3.1.0 https://github.com/Itseez/opencv_contrib.git
 ```
-3. Create a copy of OpenCV 3.1.0 folder (the one you cloned in 1.) and name it `opencv-3.1.0-with-contrib`
+3. Create a copy of `OpenCV 3.1.0` folder and name it `opencv-3.1.0-with-contrib`
 ```
 cp -r opencv opencv-3.1.0-with-contrib
 ```
-4. Copy the content of the `modules` folder of OpenCV Contrib (the one you cloned in 2.) inside the `modules` folder of `opencv-3.1.0-with-contrib` (the one you created in 3.). Now you can delete the folders you created in steps 1. and 2.
+4. Copy the content of the `modules` folder of `OpenCV Contrib` inside the `modules` folder of `opencv-3.1.0-with-contrib`
 ```
 cp -r opencv_contrib/modules/* opencv-3.1.0-with-contrib/modules/
 ```
@@ -29,7 +29,7 @@ cp -r opencv_contrib/modules/* opencv-3.1.0-with-contrib/modules/
 ```
 mkdir opencv-ios-contrib
 ```
-7. Build the framework:
+7. Build the framework and save it inside `opencv-ios-contrib` folder:
 ```
 python opencv-3.1.0-with-contrib/platforms/ios/build_framework.py opencv-ios-contrib
 ```
