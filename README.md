@@ -11,11 +11,11 @@ Alternatively, you can build it following these instructions:
 
 * Clone `OpenCV 3.1.0`: 
 ```
-git clone --branch 3.1.0 https://github.com/Itseez/opencv.git
+git clone -b 3.1.0 --single-branch https://github.com/Itseez/opencv.git
 ```
 * Clone `OpenCV Contrib`:
 ```
-git clone --branch 3.1.0 https://github.com/Itseez/opencv_contrib.git
+git clone -b 3.1.0 --single-branch https://github.com/Itseez/opencv_contrib.git
 ```
 * Create a copy of `OpenCV 3.1.0` folder and name it `opencv-3.1.0-with-contrib`
 ```
