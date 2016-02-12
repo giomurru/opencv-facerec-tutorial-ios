@@ -20,9 +20,10 @@
 		C419E90A1C58E241003844C5 /* att_faces.list in Resources */ = {isa = PBXBuildFile; fileRef = C419E9091C58E241003844C5 /* att_faces.list */; };
 		C419E90D1C592C88003844C5 /* UIImage+OpenCV.mm in Sources */ = {isa = PBXBuildFile; fileRef = C419E90C1C592C88003844C5 /* UIImage+OpenCV.mm */; };
 		C42931581C61192A005E3870 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42931571C61192A005E3870 /* opencv2.framework */; };
+		C43F54E51C68A88100DBFFF0 /* TutorialsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43F54E41C68A88100DBFFF0 /* TutorialsListViewController.m */; };
 		C4D72CEA1C583C2200DFFB8E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4D72CE91C583C2200DFFB8E /* main.m */; };
 		C4D72CED1C583C2200DFFB8E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4D72CEC1C583C2200DFFB8E /* AppDelegate.m */; };
-		C4D72CF01C583C2200DFFB8E /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C4D72CEF1C583C2200DFFB8E /* ViewController.mm */; };
+		C4D72CF01C583C2200DFFB8E /* EigenfacesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C4D72CEF1C583C2200DFFB8E /* EigenfacesViewController.mm */; };
 		C4D72CF51C583C2200DFFB8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4D72CF41C583C2200DFFB8E /* Assets.xcassets */; };
 		C4D72CF81C583C2200DFFB8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4D72CF61C583C2200DFFB8E /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -43,12 +44,14 @@
 		C419E90B1C592C88003844C5 /* UIImage+OpenCV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+OpenCV.h"; sourceTree = "<group>"; };
 		C419E90C1C592C88003844C5 /* UIImage+OpenCV.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIImage+OpenCV.mm"; sourceTree = "<group>"; };
 		C42931571C61192A005E3870 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		C43F54E31C68A88100DBFFF0 /* TutorialsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialsListViewController.h; sourceTree = "<group>"; };
+		C43F54E41C68A88100DBFFF0 /* TutorialsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialsListViewController.m; sourceTree = "<group>"; };
 		C4D72CE51C583C2200DFFB8E /* FaceRec.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceRec.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4D72CE91C583C2200DFFB8E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C4D72CEB1C583C2200DFFB8E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C4D72CEC1C583C2200DFFB8E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C4D72CEE1C583C2200DFFB8E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		C4D72CEF1C583C2200DFFB8E /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		C4D72CEE1C583C2200DFFB8E /* EigenfacesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EigenfacesViewController.h; sourceTree = "<group>"; };
+		C4D72CEF1C583C2200DFFB8E /* EigenfacesViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EigenfacesViewController.mm; sourceTree = "<group>"; };
 		C4D72CF41C583C2200DFFB8E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4D72CF71C583C2200DFFB8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C4D72CF91C583C2200DFFB8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,8 +104,10 @@
 				C419E90C1C592C88003844C5 /* UIImage+OpenCV.mm */,
 				C4D72CEB1C583C2200DFFB8E /* AppDelegate.h */,
 				C4D72CEC1C583C2200DFFB8E /* AppDelegate.m */,
-				C4D72CEE1C583C2200DFFB8E /* ViewController.h */,
-				C4D72CEF1C583C2200DFFB8E /* ViewController.mm */,
+				C4D72CEE1C583C2200DFFB8E /* EigenfacesViewController.h */,
+				C4D72CEF1C583C2200DFFB8E /* EigenfacesViewController.mm */,
+				C43F54E31C68A88100DBFFF0 /* TutorialsListViewController.h */,
+				C43F54E41C68A88100DBFFF0 /* TutorialsListViewController.m */,
 				C4D72CF41C583C2200DFFB8E /* Assets.xcassets */,
 				C4D72CF61C583C2200DFFB8E /* LaunchScreen.storyboard */,
 				C4D72CF91C583C2200DFFB8E /* Info.plist */,
@@ -208,7 +213,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4D72CF01C583C2200DFFB8E /* ViewController.mm in Sources */,
+				C43F54E51C68A88100DBFFF0 /* TutorialsListViewController.m in Sources */,
+				C4D72CF01C583C2200DFFB8E /* EigenfacesViewController.mm in Sources */,
 				C4D72CED1C583C2200DFFB8E /* AppDelegate.m in Sources */,
 				C419E90D1C592C88003844C5 /* UIImage+OpenCV.mm in Sources */,
 				C4D72CEA1C583C2200DFFB8E /* main.m in Sources */,

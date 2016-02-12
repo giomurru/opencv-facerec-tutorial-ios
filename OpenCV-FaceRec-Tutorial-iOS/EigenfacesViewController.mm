@@ -41,7 +41,7 @@
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#import "ViewController.h"
+#import "EigenfacesViewController.h"
 #import "UIImage+OpenCV.h"
 #include "opencv2/face.hpp"
 
@@ -57,13 +57,27 @@ using namespace cv;
 using namespace cv::face;
 using namespace std;
 
-
-@interface ViewController ()
+@interface EigenfacesViewController ()
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UILabel *myLabel;
+@property (nonatomic) BOOL modelTraining;
 @end
 
-@implementation ViewController
+@implementation EigenfacesViewController
+
++(id)sharedEigenfacesViewController
+{
+    static EigenfacesViewController *sharedEigenfacesViewController = nil;
+    @synchronized(self)
+    {
+        if (sharedEigenfacesViewController == nil)
+        {
+            sharedEigenfacesViewController = [[self alloc] init];
+        }
+    }
+    return sharedEigenfacesViewController;
+}
+
 
 #pragma mark UI Methods
 
@@ -83,7 +97,7 @@ using namespace std;
 
 - (UILabel *)createEigenFacesTitle
 {
-    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 40, self.view.bounds.size.width-40.0f, 40)];
+    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, self.view.bounds.size.width-40.0f, 40)];
     
     infoLabel.text = @"The Eigenfaces";
     infoLabel.textAlignment = NSTextAlignmentCenter;
@@ -107,31 +121,52 @@ using namespace std;
         
     return infoLabel;
 }
+
 #pragma mark View Methods
-- (void)loadView
-{
-    
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setTitle:@"Eigenfaces"];
     self.scrollView = [[UIScrollView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.scrollView.userInteractionEnabled = YES;
     self.scrollView.scrollEnabled = YES;
     self.scrollView.showsVerticalScrollIndicator = YES;
+    self.scrollView.backgroundColor = [UIColor whiteColor];
     self.view = self.scrollView;
-    // Do any additional setup after loading the view, typically from a nib.
+    
     self.myLabel = [self createPleaseWaitMessage];
     [self.view addSubview:self.myLabel];
+    
+    NSString* att_faces_path = [[NSBundle mainBundle]
+                                pathForResource:@"att_faces" ofType:@"list"];
+    [self runFaceDetectionAlgorithm:[att_faces_path UTF8String]];
+    
+}
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    NSString* att_faces_path = [[NSBundle mainBundle]
-                                pathForResource:@"att_faces" ofType:@"list"];
-    [self runFaceDetectionAlgorithm:[att_faces_path UTF8String]];
+    
+    /*
+    if (self.modelTraining == NO)
+    {
+        for (id view in self.view.subviews)
+        {
+            [view removeFromSuperview];
+        }
+        
+        // Do any additional setup after loading the view, typically from a nib.
+     
+    }
+    else
+    {
+        cout << "Model is still training... wait" << endl;
+    }*/
 }
 
 - (void)didReceiveMemoryWarning {
@@ -160,7 +195,7 @@ using namespace std;
 
 + (void) readCSV:(const string&)filename images:(vector<Mat>&)images labels:(vector<int>&)labels
 {
-    [ViewController readCSV:filename images:images labels:labels separator:';'];
+    [EigenfacesViewController readCSV:filename images:images labels:labels separator:';'];
 }
 
 + (void) readCSV:(const string&)filename images:(vector<Mat>&)images labels:(vector<int>&)labels separator:(char)separator
@@ -245,7 +280,7 @@ using namespace std;
     try
     {
         cout << "Reading csv database file containing paths to images and labels for each image" << endl;
-        [ViewController readCSV:fn_csv images:images labels:labels];
+        [EigenfacesViewController readCSV:fn_csv images:images labels:labels];
     }
     catch (cv::Exception& e) {
         cerr << "Error opening file \"" << fn_csv << "\". Reason: " << e.msg << endl;
@@ -291,120 +326,159 @@ using namespace std;
     //      cv::createEigenFaceRecognizer(0, 123.0);
     //
     cout << "Create Eigen Face Recognizer model" << endl;
-    Ptr<BasicFaceRecognizer> model = createEigenFaceRecognizer();
-    cout << "Train the model. Please wait while training... " << endl;
+    Ptr<BasicFaceRecognizer> _model = createEigenFaceRecognizer();
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    model->train(images, labels);
     
-    [self.myLabel removeFromSuperview];
+    self.modelTraining = YES;
     
-    int trainingTime = (int) [[NSDate date] timeIntervalSince1970] - startTime;
-    
-    [self printTrainingTime:trainingTime];
-    
-    //[infoLabel removeFromSuperview];
-    
-    // The following line predicts the label of a given
-    // test image:
-    cout << "Predicting the class of a given image" << endl;
-    int predictedLabel = model->predict(testSample);
-    //
-    // To get the confidence of a prediction call the model with:
-    //
-    //      int predictedLabel = -1;
-    //      double confidence = 0.0;
-    //      model->predict(testSample, predictedLabel, confidence);
-    //
-    string result_message = format("Predicted class = %d / Actual class = %d.", predictedLabel, testLabel);
-    cout << result_message << endl;
-    // Here is how to get the eigenvalues of this Eigenfaces model:
-    Mat eigenvalues = model->getEigenValues();
-    // And we can do the same to display the Eigenvectors (read Eigenfaces):
-    Mat W = model->getEigenVectors();
-    // Get the sample mean from the training data
-    Mat mean = model->getMean();
-    Mat meanNorm = [ViewController norm_0_255:mean.reshape(1, images[0].rows)];
-    // Display or save:
-    // Display or save the Eigenfaces:
-    CGFloat uiimgX = 0.0f;
-    CGFloat uiimgY = 80.0f;
-    
-    UILabel *eigenfacesTitle = [self createEigenFacesTitle];
-    [self.view addSubview:eigenfacesTitle];
-    
-    for (int i = 0; i < min(10, W.cols); i++)
-    {
-        if (i>0 && i%numOfThumbsPerRow==0)
-        {
-            uiimgX = 0.0f;
-            uiimgY += thumbsWidth;
-        }
-        
-        string msg = format("Eigenvalue #%d = %.5f", i, eigenvalues.at<double>(i));
-        cout << msg << endl;
-        // get eigenvector #i
-        Mat ev = W.col(i).clone();
-        // Reshape to original size & normalize to [0...255] for imshow.
-        Mat grayscale = [ViewController norm_0_255:ev.reshape(1, height)];
-        // Show the image & apply a Jet colormap for better sensing.
-        Mat cgrayscale;
-        applyColorMap(grayscale, cgrayscale, COLORMAP_JET);
-        
-        std::vector<uchar> imgBuffer;
-        cv::imencode(".png", cgrayscale, imgBuffer);
-        
-        NSData *uiimgData = [NSData dataWithBytes:imgBuffer.data() length:imgBuffer.size()];
-        UIImage *uiimg = [UIImage imageWithData:uiimgData];
-        UIImageView *uiimgView = [[UIImageView alloc] initWithImage:uiimg];
-        uiimgView.frame = CGRectMake(uiimgX, uiimgY, thumbsWidth, thumbsWidth);
-        [self.view addSubview:uiimgView];
-        
-        
-        uiimgX += thumbsWidth;
-        
-    }
-    
-    uiimgX = 0.0f;
-    uiimgY += thumbsWidth;
-    
-    UILabel *reconstructionTitleLabel = [self createReconstructionTitle:uiimgY];
-    [self.view addSubview:reconstructionTitleLabel];
-    
-    uiimgY += 40.0f;
-    
-    // Display or save the image reconstruction at some predefined steps:
-    int i = 0;
-    for(int num_components = min(W.cols, 10); num_components < min(W.cols, 300); num_components+=15)
-    {
-        
-        if (i>0 && i%numOfThumbsPerRow==0)
-        {
-            uiimgX = 0.0f;
-            uiimgY += thumbsWidth;
-        }
-        cout << "Reconstruction #" <<  setw(2) << setfill('0') << i << ": num_components " << num_components << endl;
-        // slice the eigenvectors from the model
-        Mat evs = Mat(W, Range::all(), Range(0, num_components));
-        Mat projection = LDA::subspaceProject(evs, mean, images[0].reshape(1,1));
-        Mat reconstruction = LDA::subspaceReconstruct(evs, mean, projection);
-        // Normalize the result:
-        reconstruction = [ViewController norm_0_255:reconstruction.reshape(1, images[0].rows)];
-        
-        std::vector<uchar> imgBuffer;
-        cv::imencode(".png", reconstruction, imgBuffer);
-        
-        NSData *uiimgData = [NSData dataWithBytes:imgBuffer.data() length:imgBuffer.size()];
-        UIImage *uiimg = [UIImage imageWithData:uiimgData];
-        UIImageView *uiimgView = [[UIImageView alloc] initWithImage:uiimg];
-        uiimgView.frame = CGRectMake(uiimgX, uiimgY, thumbsWidth, thumbsWidth);
-        [self.view addSubview:uiimgView];
-        
-        uiimgX += thumbsWidth;
-        ++i;
-    }
-    
-    self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, uiimgY + thumbsWidth);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
 
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docs = [paths objectAtIndex:0];
+        NSString *savedDataPath = [docs stringByAppendingPathComponent:@"eigenfaces_at.xml"];
+        
+        BOOL savedDataExists = [[NSFileManager defaultManager] fileExistsAtPath:savedDataPath];
+        
+        if (savedDataExists)
+        {
+            cout << "Loading previously saved training data." << endl;
+            //dispatch_async(dispatch_get_main_queue(), ^{
+            FileStorage fs([savedDataPath UTF8String], FileStorage::READ);
+            _model->load(fs);
+            fs.release();
+                
+            //});
+        }
+        else
+        {
+            cout << "No previously saved data found." << endl;
+            cout << "Train the model. Please wait while training... " << endl;
+            _model->train(images, labels);
+            
+            //dispatch_async(dispatch_get_main_queue(), ^{
+            FileStorage fs([savedDataPath UTF8String], FileStorage::WRITE);
+            _model->save(fs);
+            fs.release();
+            //});
+            
+            cout << "Training data has been saved" << endl;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.myLabel removeFromSuperview];
+            
+            int trainingTime = (int) [[NSDate date] timeIntervalSince1970] - startTime;
+            
+            [self printTrainingTime:trainingTime];
+            
+            //[infoLabel removeFromSuperview];
+            
+            // The following line predicts the label of a given
+            // test image:
+            cout << "Predicting the class of a given image" << endl;
+            int predictedLabel = _model->predict(testSample);
+            //
+            // To get the confidence of a prediction call the model with:
+            //
+            //      int predictedLabel = -1;
+            //      double confidence = 0.0;
+            //      model->predict(testSample, predictedLabel, confidence);
+            //
+            string result_message = format("Predicted class = %d / Actual class = %d.", predictedLabel, testLabel);
+            cout << result_message << endl;
+            // Here is how to get the eigenvalues of this Eigenfaces model:
+            Mat eigenvalues = _model->getEigenValues();
+            // And we can do the same to display the Eigenvectors (read Eigenfaces):
+            Mat W = _model->getEigenVectors();
+            // Get the sample mean from the training data
+            Mat mean = _model->getMean();
+            Mat meanNorm = [EigenfacesViewController norm_0_255:mean.reshape(1, images[0].rows)];
+            // Display or save:
+            // Display or save the Eigenfaces:
+            CGFloat uiimgX = 0.0f;
+            
+            UILabel *eigenfacesTitle = [self createEigenFacesTitle];
+            CGFloat uiimgY = eigenfacesTitle.frame.size.height;
+
+            [self.view addSubview:eigenfacesTitle];
+            
+            for (int i = 0; i < min(10, W.cols); i++)
+            {
+                if (i>0 && i%numOfThumbsPerRow==0)
+                {
+                    uiimgX = 0.0f;
+                    uiimgY += thumbsWidth;
+                }
+                
+                string msg = format("Eigenvalue #%d = %.5f", i, eigenvalues.at<double>(i));
+                cout << msg << endl;
+                // get eigenvector #i
+                Mat ev = W.col(i).clone();
+                // Reshape to original size & normalize to [0...255] for imshow.
+                Mat grayscale = [EigenfacesViewController norm_0_255:ev.reshape(1, height)];
+                // Show the image & apply a Jet colormap for better sensing.
+                Mat cgrayscale;
+                applyColorMap(grayscale, cgrayscale, COLORMAP_JET);
+                
+                std::vector<uchar> imgBuffer;
+                cv::imencode(".png", cgrayscale, imgBuffer);
+                
+                NSData *uiimgData = [NSData dataWithBytes:imgBuffer.data() length:imgBuffer.size()];
+                UIImage *uiimg = [UIImage imageWithData:uiimgData];
+                UIImageView *uiimgView = [[UIImageView alloc] initWithImage:uiimg];
+                uiimgView.frame = CGRectMake(uiimgX, uiimgY, thumbsWidth, thumbsWidth);
+                [self.view addSubview:uiimgView];
+                
+                
+                uiimgX += thumbsWidth;
+                
+            }
+            
+            uiimgX = 0.0f;
+            uiimgY += thumbsWidth;
+            
+            UILabel *reconstructionTitleLabel = [self createReconstructionTitle:uiimgY];
+            [self.view addSubview:reconstructionTitleLabel];
+            
+            uiimgY += reconstructionTitleLabel.frame.size.height;
+            
+            // Display or save the image reconstruction at some predefined steps:
+            int i = 0;
+            for(int num_components = min(W.cols, 10); num_components < min(W.cols, 300); num_components+=15)
+            {
+                
+                if (i>0 && i%numOfThumbsPerRow==0)
+                {
+                    uiimgX = 0.0f;
+                    uiimgY += thumbsWidth;
+                }
+                cout << "Reconstruction #" <<  setw(2) << setfill('0') << i << ": num_components " << num_components << endl;
+                // slice the eigenvectors from the model
+                Mat evs = Mat(W, Range::all(), Range(0, num_components));
+                Mat projection = LDA::subspaceProject(evs, mean, images[0].reshape(1,1));
+                Mat reconstruction = LDA::subspaceReconstruct(evs, mean, projection);
+                // Normalize the result:
+                reconstruction = [EigenfacesViewController norm_0_255:reconstruction.reshape(1, images[0].rows)];
+                
+                std::vector<uchar> imgBuffer;
+                cv::imencode(".png", reconstruction, imgBuffer);
+                
+                NSData *uiimgData = [NSData dataWithBytes:imgBuffer.data() length:imgBuffer.size()];
+                UIImage *uiimg = [UIImage imageWithData:uiimgData];
+                UIImageView *uiimgView = [[UIImageView alloc] initWithImage:uiimg];
+                uiimgView.frame = CGRectMake(uiimgX, uiimgY, thumbsWidth, thumbsWidth);
+                [self.view addSubview:uiimgView];
+                
+                uiimgX += thumbsWidth;
+                ++i;
+            }
+            
+            self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, uiimgY + thumbsWidth);
+            
+            self.modelTraining = NO;
+        });
+    });
 }
 
 @end

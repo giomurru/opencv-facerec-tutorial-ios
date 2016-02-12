@@ -33,4 +33,4 @@ mkdir opencv-ios-contrib
 ```
 python opencv-3.1.0-with-contrib/platforms/ios/build_framework.py opencv-ios-contrib
 ```
-* Wait the build process to finish. Once you generated the framework using the commands above, please copy the generated opencv2.framework in the root folder of this project.
+* Wait the build process to complete. Once you generated the framework using the commands above, please copy the generated opencv2.framework in the root folder of this project.

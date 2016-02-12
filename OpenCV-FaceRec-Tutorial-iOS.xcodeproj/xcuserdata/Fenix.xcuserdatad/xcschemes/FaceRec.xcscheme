@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C4D72CE41C583C2200DFFB8E"
-               BuildableName = "OpenCV-FaceRec-Tutorial-iOS.temp_caseinsensitive_rename.app"
+               BuildableName = "FaceRec.app"
                BlueprintName = "OpenCV-FaceRec-Tutorial-iOS"
                ReferencedContainer = "container:OpenCV-FaceRec-Tutorial-iOS.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C4D72CE41C583C2200DFFB8E"
-            BuildableName = "OpenCV-FaceRec-Tutorial-iOS.temp_caseinsensitive_rename.app"
+            BuildableName = "FaceRec.app"
             BlueprintName = "OpenCV-FaceRec-Tutorial-iOS"
             ReferencedContainer = "container:OpenCV-FaceRec-Tutorial-iOS.xcodeproj">
          </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C4D72CE41C583C2200DFFB8E"
-            BuildableName = "OpenCV-FaceRec-Tutorial-iOS.temp_caseinsensitive_rename.app"
+            BuildableName = "FaceRec.app"
             BlueprintName = "OpenCV-FaceRec-Tutorial-iOS"
             ReferencedContainer = "container:OpenCV-FaceRec-Tutorial-iOS.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C4D72CE41C583C2200DFFB8E"
-            BuildableName = "OpenCV-FaceRec-Tutorial-iOS.temp_caseinsensitive_rename.app"
+            BuildableName = "FaceRec.app"
             BlueprintName = "OpenCV-FaceRec-Tutorial-iOS"
             ReferencedContainer = "container:OpenCV-FaceRec-Tutorial-iOS.xcodeproj">
          </BuildableReference>

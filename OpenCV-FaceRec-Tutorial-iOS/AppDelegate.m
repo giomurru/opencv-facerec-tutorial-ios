@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "TutorialsListViewController.h"
 
 @interface AppDelegate ()
 
@@ -15,8 +15,10 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    ViewController *vc = [[ViewController alloc] init];
-    self.window.rootViewController = vc;
+    TutorialsListViewController *vc = [[TutorialsListViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    
+    self.window.rootViewController = nvc;
     
     return YES;
 }
