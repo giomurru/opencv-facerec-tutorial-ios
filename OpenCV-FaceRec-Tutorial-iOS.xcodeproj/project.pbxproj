@@ -21,6 +21,9 @@
 		C419E90D1C592C88003844C5 /* UIImage+OpenCV.mm in Sources */ = {isa = PBXBuildFile; fileRef = C419E90C1C592C88003844C5 /* UIImage+OpenCV.mm */; };
 		C42931581C61192A005E3870 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42931571C61192A005E3870 /* opencv2.framework */; };
 		C43F54E51C68A88100DBFFF0 /* TutorialsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43F54E41C68A88100DBFFF0 /* TutorialsListViewController.m */; };
+		C497A3611C7392A10090959B /* LBPHistogramsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C497A3601C7392A10090959B /* LBPHistogramsViewController.mm */; };
+		C497A3641C7394D10090959B /* FaceRecCommonTools.mm in Sources */ = {isa = PBXBuildFile; fileRef = C497A3631C7394D10090959B /* FaceRecCommonTools.mm */; };
+		C497A36A1C739C120090959B /* UIViewController+FaceRecTutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = C497A3691C739C120090959B /* UIViewController+FaceRecTutorial.m */; };
 		C4BE4DE51C71B76B00B3E508 /* FisherfacesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C4BE4DE41C71B76B00B3E508 /* FisherfacesViewController.mm */; };
 		C4BE4DE91C71D00800B3E508 /* yale_faces in Resources */ = {isa = PBXBuildFile; fileRef = C4BE4DE81C71D00800B3E508 /* yale_faces */; };
 		C4BE4DEB1C71D01800B3E508 /* yale_faces.list in Resources */ = {isa = PBXBuildFile; fileRef = C4BE4DEA1C71D01800B3E508 /* yale_faces.list */; };
@@ -49,6 +52,12 @@
 		C42931571C61192A005E3870 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		C43F54E31C68A88100DBFFF0 /* TutorialsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialsListViewController.h; sourceTree = "<group>"; };
 		C43F54E41C68A88100DBFFF0 /* TutorialsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialsListViewController.m; sourceTree = "<group>"; };
+		C497A35F1C7392A10090959B /* LBPHistogramsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBPHistogramsViewController.h; sourceTree = "<group>"; };
+		C497A3601C7392A10090959B /* LBPHistogramsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LBPHistogramsViewController.mm; sourceTree = "<group>"; };
+		C497A3621C7394D10090959B /* FaceRecCommonTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaceRecCommonTools.h; sourceTree = "<group>"; };
+		C497A3631C7394D10090959B /* FaceRecCommonTools.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FaceRecCommonTools.mm; sourceTree = "<group>"; };
+		C497A3681C739C120090959B /* UIViewController+FaceRecTutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+FaceRecTutorial.h"; sourceTree = "<group>"; };
+		C497A3691C739C120090959B /* UIViewController+FaceRecTutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+FaceRecTutorial.m"; sourceTree = "<group>"; };
 		C4BE4DE31C71B76B00B3E508 /* FisherfacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FisherfacesViewController.h; sourceTree = "<group>"; };
 		C4BE4DE41C71B76B00B3E508 /* FisherfacesViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FisherfacesViewController.mm; sourceTree = "<group>"; };
 		C4BE4DE81C71D00800B3E508 /* yale_faces */ = {isa = PBXFileReference; lastKnownFileType = folder; path = yale_faces; sourceTree = "<group>"; };
@@ -113,10 +122,16 @@
 				C419E90C1C592C88003844C5 /* UIImage+OpenCV.mm */,
 				C4D72CEB1C583C2200DFFB8E /* AppDelegate.h */,
 				C4D72CEC1C583C2200DFFB8E /* AppDelegate.m */,
+				C497A3621C7394D10090959B /* FaceRecCommonTools.h */,
+				C497A3631C7394D10090959B /* FaceRecCommonTools.mm */,
+				C497A3681C739C120090959B /* UIViewController+FaceRecTutorial.h */,
+				C497A3691C739C120090959B /* UIViewController+FaceRecTutorial.m */,
 				C4D72CEE1C583C2200DFFB8E /* EigenfacesViewController.h */,
 				C4D72CEF1C583C2200DFFB8E /* EigenfacesViewController.mm */,
 				C4BE4DE31C71B76B00B3E508 /* FisherfacesViewController.h */,
 				C4BE4DE41C71B76B00B3E508 /* FisherfacesViewController.mm */,
+				C497A35F1C7392A10090959B /* LBPHistogramsViewController.h */,
+				C497A3601C7392A10090959B /* LBPHistogramsViewController.mm */,
 				C43F54E31C68A88100DBFFF0 /* TutorialsListViewController.h */,
 				C43F54E41C68A88100DBFFF0 /* TutorialsListViewController.m */,
 				C4D72CF41C583C2200DFFB8E /* Assets.xcassets */,
@@ -228,10 +243,13 @@
 			files = (
 				C43F54E51C68A88100DBFFF0 /* TutorialsListViewController.m in Sources */,
 				C4D72CF01C583C2200DFFB8E /* EigenfacesViewController.mm in Sources */,
+				C497A3641C7394D10090959B /* FaceRecCommonTools.mm in Sources */,
 				C4D72CED1C583C2200DFFB8E /* AppDelegate.m in Sources */,
 				C419E90D1C592C88003844C5 /* UIImage+OpenCV.mm in Sources */,
 				C4BE4DE51C71B76B00B3E508 /* FisherfacesViewController.mm in Sources */,
 				C4D72CEA1C583C2200DFFB8E /* main.m in Sources */,
+				C497A36A1C739C120090959B /* UIViewController+FaceRecTutorial.m in Sources */,
+				C497A3611C7392A10090959B /* LBPHistogramsViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

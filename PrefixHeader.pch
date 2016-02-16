@@ -22,4 +22,6 @@
 #import <Foundation/Foundation.h>
 #endif
 
+#define IS_IPAD [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad
+
 #endif /* PrefixHeader_pch */

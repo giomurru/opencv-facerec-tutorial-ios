@@ -9,6 +9,7 @@
 #import "TutorialsListViewController.h"
 #import "EigenfacesViewController.h"
 #import "FisherfacesViewController.h"
+#import "LBPHistogramsViewController.h"
 
 @interface TutorialsListViewController ()
 
@@ -18,13 +19,14 @@
 
 #define kEigenfacesTutorial @"Eigenfaces Tutorial"
 #define kFisherfacesTutorial @"Fisherfaces Tutorial"
+#define kLBPHistogramsTutorial @"LBPHistograms Tutorial"
 
 @implementation TutorialsListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tutorialsTitles = @[kEigenfacesTutorial, kFisherfacesTutorial];
+    self.tutorialsTitles = @[kEigenfacesTutorial, kFisherfacesTutorial, kLBPHistogramsTutorial];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -84,6 +86,11 @@
     {
         FisherfacesViewController *ffvc = [FisherfacesViewController sharedFisherfacesViewController];
         [self.navigationController pushViewController:ffvc animated:YES];
+    }
+    else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:kLBPHistogramsTutorial])
+    {
+        LBPHistogramsViewController *lbphvc = [LBPHistogramsViewController sharedLBPHistogramsViewController];
+        [self.navigationController pushViewController:lbphvc animated:YES];
     }
 }
 

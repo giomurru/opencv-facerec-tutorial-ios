@@ -43,19 +43,8 @@
 
 #import "EigenfacesViewController.h"
 #import "UIImage+OpenCV.h"
-#include "opencv2/face.hpp"
-
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
-
-#define IS_IPAD [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad
-
-
-using namespace cv;
-using namespace cv::face;
-using namespace std;
+#import "FaceRecCommonTools.h"
+#import "UIViewController+FaceRecTutorial.h"
 
 @interface EigenfacesViewController ()
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -76,50 +65,6 @@ using namespace std;
         }
     }
     return sharedEigenfacesViewController;
-}
-
-
-#pragma mark UI Methods
-
-- (UILabel *)createPleaseWaitMessage
-{
-    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, 0.0f, self.view.bounds.size.width-40.0f, self.view.bounds.size.height)];
-    
-    infoLabel.numberOfLines = 0;
-    infoLabel.text = @"Training the model.\nPlease wait...\nIt can take a couple of minutes.";
-    infoLabel.textAlignment = NSTextAlignmentCenter;
-    infoLabel.textColor = [UIColor blackColor];
-    infoLabel.backgroundColor = [UIColor clearColor];
-    infoLabel.font = [UIFont fontWithName:@"Helvetica" size:IS_IPAD ? 50.0f : 20.0f];
-    
-    return infoLabel;
-}
-
-- (UILabel *)createEigenFacesTitle
-{
-    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, self.view.bounds.size.width-40.0f, 40)];
-    
-    infoLabel.text = @"The Eigenfaces";
-    infoLabel.textAlignment = NSTextAlignmentCenter;
-    infoLabel.textColor = [UIColor blackColor];
-    infoLabel.backgroundColor = [UIColor clearColor];
-    infoLabel.font = [UIFont fontWithName:@"Helvetica" size:IS_IPAD ? 30.0f : 15.0f];
-    
-    return infoLabel;
-}
-
-
-- (UILabel *)createReconstructionTitle:(CGFloat)yPosition
-{
-    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, yPosition, self.view.bounds.size.width-40.0f, 40)];
-    
-    infoLabel.text = @"The Reconstruction";
-    infoLabel.textAlignment = NSTextAlignmentCenter;
-    infoLabel.textColor = [UIColor blackColor];
-    infoLabel.backgroundColor = [UIColor clearColor];
-    infoLabel.font = [UIFont fontWithName:@"Helvetica" size:IS_IPAD ? 30.0f : 15.0f];
-        
-    return infoLabel;
 }
 
 #pragma mark View Methods
@@ -174,84 +119,6 @@ using namespace std;
     // Dispose of any resources that can be recreated.
 }
 
-+(Mat)norm_0_255:(InputArray)ia
-{
-    Mat src = ia.getMat();
-    // Create and return normalized image:
-    Mat dst;
-    switch(src.channels()) {
-        case 1:
-            cv::normalize(ia, dst, 0, 255, NORM_MINMAX, CV_8UC1);
-            break;
-        case 3:
-            cv::normalize(ia, dst, 0, 255, NORM_MINMAX, CV_8UC3);
-            break;
-        default:
-            src.copyTo(dst);
-            break;
-    }
-    return dst;
-}
-
-+ (void) readCSV:(const string&)filename images:(vector<Mat>&)images labels:(vector<int>&)labels
-{
-    [EigenfacesViewController readCSV:filename images:images labels:labels separator:';'];
-}
-
-+ (void) readCSV:(const string&)filename images:(vector<Mat>&)images labels:(vector<int>&)labels separator:(char)separator
-{
-    std::ifstream file(filename.c_str(), ifstream::in);
-    if (!file)
-    {
-        string error_message = "No valid input file was given, please check the given filename.";
-        CV_Error(Error::StsBadArg, error_message);
-    }
-    string line, path, classlabel;
-    int count = 1;
-    while (getline(file, line))
-    {
-        stringstream liness(line);
-        getline(liness, path, separator);
-        getline(liness, classlabel);
-        if(!path.empty() && !classlabel.empty())
-        {
-            cout << " Reading file " <<  setw(3) << setfill('0') << count << "\t\tpath: " << path << "\t\tlabel: " << classlabel << endl;
-            NSString* filePath = [[NSBundle mainBundle]
-                                  pathForResource:[NSString stringWithUTF8String:path.c_str()] ofType:@"pgm"];
-            NSData *imageData = [NSData dataWithContentsOfFile:filePath];
-            
-            cv::Mat cvImage = cv::imdecode(Mat(1, (int)[imageData length], CV_8UC1, (void*)imageData.bytes), CV_LOAD_IMAGE_UNCHANGED);
-            
-            images.push_back(cvImage);
-            labels.push_back(atoi(classlabel.c_str()));
-            ++count;
-        }
-    }
-}
-- (void)printTrainingTime:(int)trainingTime
-{
-    int trainingHours = 0;
-    int trainingMinutes = 0;
-    int trainingSeconds = 0;
-    
-    if (trainingTime >= 3600)
-    {
-        trainingHours = (int) trainingTime/60;
-        trainingTime = trainingTime % 60;
-    }
-    if (trainingTime >= 60)
-    {
-        trainingMinutes = (int) trainingTime/60;
-        trainingTime = trainingTime % 60;
-    }
-    if (trainingTime > 0)
-    {
-        trainingSeconds = trainingTime;
-    }
-    
-    printf("Training time was %02d:%02d:%02d\n", trainingHours, trainingMinutes, trainingSeconds);
-}
-
 
 
 - (void)runFaceDetectionAlgorithm:(const char *)csvPath
@@ -268,7 +135,7 @@ using namespace std;
     try
     {
         cout << "Reading csv database file containing paths to images and labels for each image" << endl;
-        [EigenfacesViewController readCSV:fn_csv images:images labels:labels];
+        [FaceRecCommonTools readCSV:fn_csv images:images labels:labels];
     }
     catch (cv::Exception& e) {
         cerr << "Error opening file \"" << fn_csv << "\". Reason: " << e.msg << endl;
@@ -374,7 +241,7 @@ using namespace std;
             
             int trainingTime = (int) [[NSDate date] timeIntervalSince1970] - startTime;
             
-            [self printTrainingTime:trainingTime];
+            [FaceRecCommonTools printFormattedTime:trainingTime];
             
             //[infoLabel removeFromSuperview];
             
@@ -397,12 +264,12 @@ using namespace std;
             Mat W = _model->getEigenVectors();
             // Get the sample mean from the training data
             Mat mean = _model->getMean();
-            Mat meanNorm = [EigenfacesViewController norm_0_255:mean.reshape(1, images[0].rows)];
+            Mat meanNorm = [FaceRecCommonTools norm_0_255:mean.reshape(1, images[0].rows)];
             // Display or save:
             // Display or save the Eigenfaces:
             CGFloat uiimgX = 0.0f;
             
-            UILabel *eigenfacesTitle = [self createEigenFacesTitle];
+            UILabel *eigenfacesTitle = [self createTutorialTitle:@"The Eigenfaces"];
             CGFloat uiimgY = eigenfacesTitle.frame.size.height;
 
             [self.view addSubview:eigenfacesTitle];
@@ -420,7 +287,7 @@ using namespace std;
                 // get eigenvector #i
                 Mat ev = W.col(i).clone();
                 // Reshape to original size & normalize to [0...255] for imshow.
-                Mat grayscale = [EigenfacesViewController norm_0_255:ev.reshape(1, height)];
+                Mat grayscale = [FaceRecCommonTools norm_0_255:ev.reshape(1, height)];
                 // Show the image & apply a Jet colormap for better sensing.
                 Mat cgrayscale;
                 applyColorMap(grayscale, cgrayscale, COLORMAP_JET);
@@ -463,7 +330,7 @@ using namespace std;
                 Mat projection = LDA::subspaceProject(evs, mean, images[0].reshape(1,1));
                 Mat reconstruction = LDA::subspaceReconstruct(evs, mean, projection);
                 // Normalize the result:
-                reconstruction = [EigenfacesViewController norm_0_255:reconstruction.reshape(1, images[0].rows)];
+                reconstruction = [FaceRecCommonTools norm_0_255:reconstruction.reshape(1, images[0].rows)];
                 
                 std::vector<uchar> imgBuffer;
                 cv::imencode(".png", reconstruction, imgBuffer);
