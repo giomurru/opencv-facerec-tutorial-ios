@@ -219,7 +219,15 @@ using namespace std;
         getline(liness, classlabel);
         if(!path.empty() && !classlabel.empty())
         {
-            cout << " Reading file " <<  setw(3) << setfill('0') << count << "\t\tpath: " << path << "\t\t\t\tlabel: " << classlabel << endl;
+            cout << " Reading file " <<  setw(3) << setfill('0') << count << "\t\tpath: " << path;
+            int pathLength = path.length();
+            while (pathLength < 50)
+            {
+                cout << " ";
+                pathLength++;
+            }
+            cout << "label: " << classlabel << endl;
+            
             NSString* filePath = [[NSBundle mainBundle]
                                   pathForResource:[NSString stringWithUTF8String:path.c_str()] ofType:@"pgm"];
             NSData *imageData = [NSData dataWithContentsOfFile:filePath];
@@ -295,13 +303,13 @@ using namespace std;
     int numOfThumbsPerRow;
     if (IS_IPAD)
     {
-        thumbsWidth = 128.0f;
-        numOfThumbsPerRow = 6;
+        thumbsWidth = 192.0f;
+        numOfThumbsPerRow = 4;
     }
     else
     {
-        thumbsWidth = 80.0f;
-        numOfThumbsPerRow = 4;
+        thumbsWidth = 160.0f;
+        numOfThumbsPerRow = 2;
     }
     
     CGFloat thumbsHeight = thumbsWidth * ((CGFloat)height/(CGFloat)width);
