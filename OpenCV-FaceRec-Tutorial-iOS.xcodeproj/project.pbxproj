@@ -21,6 +21,9 @@
 		C419E90D1C592C88003844C5 /* UIImage+OpenCV.mm in Sources */ = {isa = PBXBuildFile; fileRef = C419E90C1C592C88003844C5 /* UIImage+OpenCV.mm */; };
 		C42931581C61192A005E3870 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42931571C61192A005E3870 /* opencv2.framework */; };
 		C43F54E51C68A88100DBFFF0 /* TutorialsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43F54E41C68A88100DBFFF0 /* TutorialsListViewController.m */; };
+		C4BE4DE51C71B76B00B3E508 /* FisherfacesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C4BE4DE41C71B76B00B3E508 /* FisherfacesViewController.mm */; };
+		C4BE4DE91C71D00800B3E508 /* yale_faces in Resources */ = {isa = PBXBuildFile; fileRef = C4BE4DE81C71D00800B3E508 /* yale_faces */; };
+		C4BE4DEB1C71D01800B3E508 /* yale_faces.list in Resources */ = {isa = PBXBuildFile; fileRef = C4BE4DEA1C71D01800B3E508 /* yale_faces.list */; };
 		C4D72CEA1C583C2200DFFB8E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4D72CE91C583C2200DFFB8E /* main.m */; };
 		C4D72CED1C583C2200DFFB8E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4D72CEC1C583C2200DFFB8E /* AppDelegate.m */; };
 		C4D72CF01C583C2200DFFB8E /* EigenfacesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C4D72CEF1C583C2200DFFB8E /* EigenfacesViewController.mm */; };
@@ -46,6 +49,10 @@
 		C42931571C61192A005E3870 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		C43F54E31C68A88100DBFFF0 /* TutorialsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialsListViewController.h; sourceTree = "<group>"; };
 		C43F54E41C68A88100DBFFF0 /* TutorialsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialsListViewController.m; sourceTree = "<group>"; };
+		C4BE4DE31C71B76B00B3E508 /* FisherfacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FisherfacesViewController.h; sourceTree = "<group>"; };
+		C4BE4DE41C71B76B00B3E508 /* FisherfacesViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FisherfacesViewController.mm; sourceTree = "<group>"; };
+		C4BE4DE81C71D00800B3E508 /* yale_faces */ = {isa = PBXFileReference; lastKnownFileType = folder; path = yale_faces; sourceTree = "<group>"; };
+		C4BE4DEA1C71D01800B3E508 /* yale_faces.list */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = yale_faces.list; sourceTree = "<group>"; };
 		C4D72CE51C583C2200DFFB8E /* FaceRec.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceRec.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4D72CE91C583C2200DFFB8E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C4D72CEB1C583C2200DFFB8E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -81,7 +88,9 @@
 		C4D72CDC1C583C2200DFFB8E = {
 			isa = PBXGroup;
 			children = (
+				C4BE4DE81C71D00800B3E508 /* yale_faces */,
 				C419E9091C58E241003844C5 /* att_faces.list */,
+				C4BE4DEA1C71D01800B3E508 /* yale_faces.list */,
 				C419E9071C58E1C9003844C5 /* att_faces */,
 				C4D72CE71C583C2200DFFB8E /* OpenCV-FaceRec-Tutorial-iOS */,
 				C4D72CE61C583C2200DFFB8E /* Products */,
@@ -106,6 +115,8 @@
 				C4D72CEC1C583C2200DFFB8E /* AppDelegate.m */,
 				C4D72CEE1C583C2200DFFB8E /* EigenfacesViewController.h */,
 				C4D72CEF1C583C2200DFFB8E /* EigenfacesViewController.mm */,
+				C4BE4DE31C71B76B00B3E508 /* FisherfacesViewController.h */,
+				C4BE4DE41C71B76B00B3E508 /* FisherfacesViewController.mm */,
 				C43F54E31C68A88100DBFFF0 /* TutorialsListViewController.h */,
 				C43F54E41C68A88100DBFFF0 /* TutorialsListViewController.m */,
 				C4D72CF41C583C2200DFFB8E /* Assets.xcassets */,
@@ -200,8 +211,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D72CF81C583C2200DFFB8E /* LaunchScreen.storyboard in Resources */,
+				C4BE4DEB1C71D01800B3E508 /* yale_faces.list in Resources */,
 				C4D72CF51C583C2200DFFB8E /* Assets.xcassets in Resources */,
 				C419E90A1C58E241003844C5 /* att_faces.list in Resources */,
+				C4BE4DE91C71D00800B3E508 /* yale_faces in Resources */,
 				C419E9081C58E1C9003844C5 /* att_faces in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,6 +230,7 @@
 				C4D72CF01C583C2200DFFB8E /* EigenfacesViewController.mm in Sources */,
 				C4D72CED1C583C2200DFFB8E /* AppDelegate.m in Sources */,
 				C419E90D1C592C88003844C5 /* UIImage+OpenCV.mm in Sources */,
+				C4BE4DE51C71B76B00B3E508 /* FisherfacesViewController.mm in Sources */,
 				C4D72CEA1C583C2200DFFB8E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

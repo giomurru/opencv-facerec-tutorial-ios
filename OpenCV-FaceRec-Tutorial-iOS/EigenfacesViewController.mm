@@ -256,18 +256,6 @@ using namespace std;
 
 - (void)runFaceDetectionAlgorithm:(const char *)csvPath
 {
-    CGFloat thumbsWidth;
-    int numOfThumbsPerRow;
-    if (IS_IPAD)
-    {
-        thumbsWidth = 128.0f;
-        numOfThumbsPerRow = 6;
-    }
-    else
-    {
-        thumbsWidth = 80.0f;
-        numOfThumbsPerRow = 4;
-    }
     
     cout << "Running Face Detection Algorithm" << endl;
     // Get the path to your CSV.
@@ -296,7 +284,23 @@ using namespace std;
     // Get the height from the first image. We'll need this
     // later in code to reshape the images to their original
     // size:
+    int width = images[0].cols;
     int height = images[0].rows;
+    
+    CGFloat thumbsWidth;
+    int numOfThumbsPerRow;
+    if (IS_IPAD)
+    {
+        thumbsWidth = 128.0f;
+        numOfThumbsPerRow = 6;
+    }
+    else
+    {
+        thumbsWidth = 80.0f;
+        numOfThumbsPerRow = 4;
+    }
+    
+    CGFloat thumbsHeight = thumbsWidth * ((CGFloat)height/(CGFloat)width);
     // The following lines simply get the last images from
     // your dataset and remove it from the vector. This is
     // done, so that the training data (which we learn the
@@ -408,7 +412,7 @@ using namespace std;
                 if (i>0 && i%numOfThumbsPerRow==0)
                 {
                     uiimgX = 0.0f;
-                    uiimgY += thumbsWidth;
+                    uiimgY += thumbsHeight;
                 }
                 
                 string msg = format("Eigenvalue #%d = %.5f", i, eigenvalues.at<double>(i));
@@ -427,7 +431,7 @@ using namespace std;
                 NSData *uiimgData = [NSData dataWithBytes:imgBuffer.data() length:imgBuffer.size()];
                 UIImage *uiimg = [UIImage imageWithData:uiimgData];
                 UIImageView *uiimgView = [[UIImageView alloc] initWithImage:uiimg];
-                uiimgView.frame = CGRectMake(uiimgX, uiimgY, thumbsWidth, thumbsWidth);
+                uiimgView.frame = CGRectMake(uiimgX, uiimgY, thumbsWidth, thumbsHeight);
                 [self.view addSubview:uiimgView];
                 
                 
@@ -436,7 +440,7 @@ using namespace std;
             }
             
             uiimgX = 0.0f;
-            uiimgY += thumbsWidth;
+            uiimgY += thumbsHeight;
             
             UILabel *reconstructionTitleLabel = [self createReconstructionTitle:uiimgY];
             [self.view addSubview:reconstructionTitleLabel];
@@ -451,7 +455,7 @@ using namespace std;
                 if (i>0 && i%numOfThumbsPerRow==0)
                 {
                     uiimgX = 0.0f;
-                    uiimgY += thumbsWidth;
+                    uiimgY += thumbsHeight;
                 }
                 cout << "Reconstruction #" <<  setw(2) << setfill('0') << i << ": num_components " << num_components << endl;
                 // slice the eigenvectors from the model
@@ -467,14 +471,14 @@ using namespace std;
                 NSData *uiimgData = [NSData dataWithBytes:imgBuffer.data() length:imgBuffer.size()];
                 UIImage *uiimg = [UIImage imageWithData:uiimgData];
                 UIImageView *uiimgView = [[UIImageView alloc] initWithImage:uiimg];
-                uiimgView.frame = CGRectMake(uiimgX, uiimgY, thumbsWidth, thumbsWidth);
+                uiimgView.frame = CGRectMake(uiimgX, uiimgY, thumbsWidth, thumbsHeight);
                 [self.view addSubview:uiimgView];
                 
                 uiimgX += thumbsWidth;
                 ++i;
             }
             
-            self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, uiimgY + thumbsWidth);
+            self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, uiimgY + thumbsHeight);
             
             self.modelTraining = NO;
         });

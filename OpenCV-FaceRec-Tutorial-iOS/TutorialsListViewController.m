@@ -8,6 +8,7 @@
 
 #import "TutorialsListViewController.h"
 #import "EigenfacesViewController.h"
+#import "FisherfacesViewController.h"
 
 @interface TutorialsListViewController ()
 
@@ -23,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tutorialsTitles = @[kEigenfacesTutorial];
+    self.tutorialsTitles = @[kEigenfacesTutorial, kFisherfacesTutorial];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -78,6 +79,11 @@
     {
         EigenfacesViewController *efvc = [EigenfacesViewController sharedEigenfacesViewController];
         [self.navigationController pushViewController:efvc animated:YES];
+    }
+    else if ([[tableView cellForRowAtIndexPath:indexPath].textLabel.text isEqualToString:kFisherfacesTutorial])
+    {
+        FisherfacesViewController *ffvc = [FisherfacesViewController sharedFisherfacesViewController];
+        [self.navigationController pushViewController:ffvc animated:YES];
     }
 }
 
