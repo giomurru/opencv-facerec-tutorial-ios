@@ -16,6 +16,6 @@ git clone -b 3.2.0 --single-branch https://github.com/opencv/opencv_contrib.git
 ```
 * Build the framework and save it inside `opencv-ios-framework` folder:
 ```
-python opencv-3.2.0-with-contrib/platforms/ios/build_framework.py --contrib opencv_contrib opencv-ios-framework
+python opencv/platforms/ios/build_framework.py --contrib opencv_contrib opencv-ios-framework
 ```
 * Wait the build process to complete. Once you generated the framework using the commands above, please copy the generated opencv2.framework in the root folder of this project.
